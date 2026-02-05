@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+
+  <Project Path="dinput8SideLoader/dinput8SideLoader.vcxproj" Id="2ab9b5a8-8781-45e0-860a-2daa931d92b8">
+    <Platform Solution="Release|x64" Project="x64" />
+    <Platform Solution="Release|x86" Project="x86" />
+  </Project>
+
+  <Project Path="Metro_Reduxed_FOV/Metro_Reduxed_FOV.vcxproj" Id="345d1961-3887-4ba7-b274-f919199a9e38">
+    <Platform Solution="Release|x64" Project="x64" />
+    <Platform Solution="Release|x86" Project="x86" />
+  </Project>
+</Solution>
