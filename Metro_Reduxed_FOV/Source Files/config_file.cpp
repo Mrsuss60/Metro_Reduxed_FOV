@@ -20,7 +20,7 @@ void SaveConfig() {
     std::ofstream f(GetPath());
     if (!f.is_open()) return;
 
-    f << "### Metro Redux FOV Config ###\n\n";
+    f << "### Metro Reduxed FOV Config ###\n\n";
 
     f << "# Stepping Factor (Set how fast FOV changes)\n";
     f << "Step=" << g_Step << "\n";
@@ -34,7 +34,7 @@ void SaveConfig() {
     f << "WorldFOV_IncreaseKEY=0x" << std::hex << std::uppercase << g_World_Inc << std::dec << "\n";
     f << "WorldFOV_DecreaseKEY=0x" << std::hex << std::uppercase << g_World_Dec << std::dec << "\n\n";
 
-    f << "# --- ViewModel FOV (Setting ViewModelHorizontalFOV above 88.25 can reveal unfinished player model for certain weapons) ---\n";
+    f << "# --- ViewModel FOV (Setting ViewModelHorizontalFOV above 88.25 can reveal unfinished player model when using certain weapons) ---\n";
     f << "MinViewModelFOV=" << g_MinViewMFOV << "\n";
     f << "MaxViewModelFOV=" << g_MaxViewMFOV << "\n";
     f << "ViewModelHorizontalFOV=" << g_targetViewMHFOV.load() << "\n";
@@ -55,8 +55,8 @@ void SaveConfig() {
     f << "# VK_LBUTTON    0x01 (Left Mouse Button)\n";
     f << "# VK_RBUTTON    0x02 (Right Mouse Button)\n";
     f << "# VK_MBUTTON    0x04 (Middle Mouse Button)\n";
-    f << "# VK_XBUTTON1   0x05 (Side1 Mouse Button)\n";
-    f << "# VK_XBUTTON2   0x06 (Side2 Mouse Button)\n";
+    f << "# VK_XBUTTON1   0x05 (Side Mouse Button1)\n";
+    f << "# VK_XBUTTON2   0x06 (Side Mouse Button2)\n";
 
     f << "# --- Standard Keys ---\n";
     f << "# VK_BACK       0x08 (Backspace)\n";
