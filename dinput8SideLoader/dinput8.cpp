@@ -31,8 +31,19 @@ namespace {
         return f.good();
     }
 
+    bool IsGameWindowReady() {
+        return FindWindowA(nullptr, "Metro Redux") != nullptr;
+    }
+
     unsigned int __stdcall InjectThread(void*) {
-        Sleep(5000);
+
+        int attempts = 0;
+        while (!IsGameWindowReady() && attempts < 100) {
+            Sleep(100);
+            attempts++;
+        }
+
+        Sleep(1000);
 
         if (g_fovDll) return 0;
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-constexpr bool ENABLE_CONSOLE = false;
+
 #define PI 3.14159265358979323846f
 
 constexpr float DEFAULT_WORLD_FOV = 50.625f;

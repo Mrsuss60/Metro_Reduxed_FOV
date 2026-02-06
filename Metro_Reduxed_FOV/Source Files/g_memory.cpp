@@ -3,9 +3,14 @@
 bool PatchMemory(void* address, const void* data, size_t size) {
     if (!address) return false;
     DWORD old;
+
     if (VirtualProtect(address, size, PAGE_EXECUTE_READWRITE, &old)) {
+
         memcpy(address, data, size);
-        VirtualProtect(address, size, old, &old);
+
+        DWORD dummy;
+        VirtualProtect(address, size, old, &dummy);
+
         return true;
     }
     return false;

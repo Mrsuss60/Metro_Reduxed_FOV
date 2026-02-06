@@ -24,15 +24,9 @@
     <ClInclude Include="Headers/globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers/console.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files/g_memory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files/console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files/config_file.cpp">

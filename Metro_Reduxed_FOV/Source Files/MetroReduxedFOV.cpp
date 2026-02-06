@@ -1,10 +1,8 @@
 #include "globals.h"
 #include "g_memory.h"
 #include "config_file.h"
-#include "console.h"
 #include <cmath>
 #include <thread>
-#include <iostream>
 #include <algorithm>
 
 float HzToVtFOV(float hFov) {
@@ -30,25 +28,16 @@ bool DetectVersion() {
     g_gameBaseAddr = (uintptr_t)GetModuleHandle(NULL);
     if (!g_gameBaseAddr) return false;
 
-    auto Check = [](GameOffsets& g, const char* name) -> bool {
+    auto Check = [](GameOffsets& g) -> bool {
         float* p = (float*)(g_gameBaseAddr + g.WorldFOV);
         if (IsBadReadPtr(p, 4) || *p < 40.0f || *p > 150.0f) return false;
-
         g_ActiveOffsets = &g;
-        std::cout << "[+] Detected Version: " << name << "\n";
-
-        std::thread([&g]() {
-            Sleep(10000);
-            float* aspectRatio = (float*)(g_gameBaseAddr + g.ViewMFOV + 0x4);
-            if (!IsBadReadPtr(aspectRatio, 4)) std::cout << " > Aspect Ratio: " << *aspectRatio << "\n";
-        }).detach();
         return true;
-     };
+        };
 
-    if (Check(g_Steam, "Steam / GOG")) return true;
-    if (Check(g_Epic, "Epic Games"))  return true;
+    if (Check(g_Steam)) return true;
+    if (Check(g_Epic)) return true;
 
-    Log("[-] ERROR: Unknown Game Version.");
     return false;
 }
 
@@ -78,7 +67,6 @@ void SetHooks(bool enable) {
 }
 
 void MainLoop() {
-    InitConsole();
     LoadConfig();
     g_smoothWorld = g_targetWorldHFOV.load();
     g_smoothViewM = g_targetViewMHFOV.load();
@@ -86,13 +74,25 @@ void MainLoop() {
     bool ready = DetectVersion();
     if (ready && g_modEnabled) SetHooks(true);
 
+    static bool loggedAR = false;
+    static DWORD startTime = GetTickCount64();
+
     while (g_initialized.load()) {
-        if (HasConfigChanged()) { LoadConfig(); Log("Config reloaded"); }
+        if (HasConfigChanged()) { LoadConfig(); }
+
+
+        if (!loggedAR && ready && (GetTickCount64() - startTime > 15000)) {
+            if (g_ActiveOffsets) {
+                float* ptr = (float*)(g_gameBaseAddr + g_ActiveOffsets->ViewMFOV + 0x4);
+                if (!IsBadReadPtr(ptr, 4)) {
+                    loggedAR = true;
+                }
+            }
+        }
 
         if (GetAsyncKeyState(g_ToggleKey) & 1) {
             g_modEnabled = !g_modEnabled;
             if (ready) SetHooks(g_modEnabled);
-            std::cout << (g_modEnabled ? "[+] Mod Enabled" : "[-] Mod Disabled") << "\n";
         }
 
         if (g_modEnabled && ready) {

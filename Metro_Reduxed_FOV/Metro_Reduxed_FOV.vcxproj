@@ -124,6 +124,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)Metro_Reduxed_FOV\Headers</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,6 +145,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)Metro_Reduxed_FOV\Headers</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,13 +155,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Headers/config_file.h" />
-    <ClInclude Include="Headers/console.h" />
     <ClInclude Include="Headers/globals.h" />
     <ClInclude Include="Headers/g_memory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files/config_file.cpp" />
-    <ClCompile Include="Source Files/console.cpp" />
     <ClCompile Include="Source Files/g_memory.cpp" />
     <ClCompile Include="Source Files/MetroReduxedFOV.cpp" />
   </ItemGroup>
