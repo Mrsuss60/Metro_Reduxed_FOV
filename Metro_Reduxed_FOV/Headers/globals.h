@@ -8,7 +8,7 @@ constexpr bool ENABLE_CONSOLE = true;
 #define PI 3.14159265358979323846f
 
 constexpr float DEFAULT_WORLD_FOV = 50.625f;
-inline float g_Step = 0.025f;
+inline float g_Step = 0.25f;
 
 inline int g_ToggleKey = 0x76;   
 inline int g_ZoomHoldKey = 0x06; 
@@ -17,10 +17,14 @@ inline int g_World_Dec = 0x65;
 inline int g_ViewM_Inc = 0x67;      
 inline int g_ViewM_Dec = 0x64;
 
-constexpr float MIN_FOV = 10.0f;
-constexpr float MAX_WORLD_FOV = 140.0f;
-constexpr float MAX_ViewM_FOV = 88.25f;
-constexpr float MAX_ZOOM_FOV = 50.0f;
+inline float g_MinWorldFOV = 10.0f;
+inline float g_MaxWorldFOV = 140.0f;
+
+inline float g_MinViewMFOV = 10.0f;
+inline float g_MaxViewMFOV = 88.25f; 
+
+inline float g_MinZoomFOV = 10.0f;
+inline float g_MaxZoomFOV = 60.0f;
 
 inline std::atomic<float> g_targetWorldHFOV = 90.0f;
 inline std::atomic<float> g_targetViewMHFOV = 80.0f;

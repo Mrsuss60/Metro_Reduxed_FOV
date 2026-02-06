@@ -22,23 +22,29 @@ void SaveConfig() {
 
     f << "### Metro Redux FOV Config ###\n\n";
 
-    f << "# Stepping Factor(Set how fast FOV changes)\n";
+    f << "# Stepping Factor (Set how fast FOV changes)\n";
     f << "Step=" << g_Step << "\n";
     f << "ToggleMOD_KEY=0x" << std::hex << std::uppercase << g_ToggleKey << std::dec << "\n\n";
 
     f << "# --- World FOV ---\n";
+    f << "MinWorldFOV=" << g_MinWorldFOV << "\n";
+    f << "MaxWorldFOV=" << g_MaxWorldFOV << "\n";
     f << "WorldHorizontalFOV=" << g_targetWorldHFOV.load() << "\n";
     f << "\n";
     f << "WorldFOV_IncreaseKEY=0x" << std::hex << std::uppercase << g_World_Inc << std::dec << "\n";
     f << "WorldFOV_DecreaseKEY=0x" << std::hex << std::uppercase << g_World_Dec << std::dec << "\n\n";
 
-    f << "# --- ViewModel FOV ---\n";
+    f << "# --- ViewModel FOV (Setting ViewModelHorizontalFOV above 88.25 can reveal unfinished player model for certain weapons) ---\n";
+    f << "MinViewModelFOV=" << g_MinViewMFOV << "\n";
+    f << "MaxViewModelFOV=" << g_MaxViewMFOV << "\n";
     f << "ViewModelHorizontalFOV=" << g_targetViewMHFOV.load() << "\n";
     f << "\n";
     f << "ViewModelFOV_IncreaseKEY=0x" << std::hex << std::uppercase << g_ViewM_Inc << std::dec << "\n";
     f << "ViewModelFOV_DecreaseKEY=0x" << std::hex << std::uppercase << g_ViewM_Dec << std::dec << "\n\n";
 
     f << "# --- Zoom ---\n";
+    f << "MinZoomFOV=" << g_MinZoomFOV << "\n";
+    f << "MaxZoomFOV=" << g_MaxZoomFOV << "\n";
     f << "HoldZoomFOV=" << g_ZoomFOV.load() << "\n";
     f << "\n";
     f << "HOLD_ZOOM_KEY=0x" << std::hex << std::uppercase << g_ZoomHoldKey << std::dec << "\n\n";
@@ -151,16 +157,23 @@ void LoadConfig() {
         try { valI = std::stoi(valStr, nullptr, 0); }
         catch (...) { continue; }
 
-        if (key == "WorldHorizontalFOV")
-            g_targetWorldHFOV.store(std::clamp(valF, MIN_FOV, MAX_WORLD_FOV));
+        if (key == "MinWorldFOV") g_MinWorldFOV = valF;
+        else if (key == "MaxWorldFOV") g_MaxWorldFOV = valF;
+        else if (key == "MinViewModelFOV") g_MinViewMFOV = valF;
+        else if (key == "MaxViewModelFOV") g_MaxViewMFOV = valF;
+        else if (key == "MinZoomFOV") g_MinZoomFOV = valF;
+        else if (key == "MaxZoomFOV") g_MaxZoomFOV = valF;
+
+        else if (key == "WorldHorizontalFOV")
+            g_targetWorldHFOV.store(std::clamp(valF, g_MinWorldFOV, g_MaxWorldFOV));
 
         else if (key == "ViewModelHorizontalFOV")
-            g_targetViewMHFOV.store(std::clamp(valF, MIN_FOV, MAX_ViewM_FOV));
+            g_targetViewMHFOV.store(std::clamp(valF, g_MinViewMFOV, g_MaxViewMFOV));
 
         else if (key == "HoldZoomFOV")
-            g_ZoomFOV.store(std::clamp(valF, MIN_FOV, MAX_ZOOM_FOV));
+            g_ZoomFOV.store(std::clamp(valF, g_MinZoomFOV, g_MaxZoomFOV));
 
-        else if (key == "Step") g_Step = std::clamp(valF, 0.01f, 1.0f);
+        else if (key == "Step") g_Step = std::clamp(valF, 0.1f, 1.5f);
 
         else if (key == "ToggleMOD_KEY") g_ToggleKey = valI;
         else if (key == "HOLD_ZOOM_KEY") g_ZoomHoldKey = valI;

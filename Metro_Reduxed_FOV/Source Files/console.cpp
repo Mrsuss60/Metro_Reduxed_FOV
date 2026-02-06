@@ -6,7 +6,7 @@
 
 void Log(const std::string& msg) {
 	if (ENABLE_CONSOLE) {
-		std::cout << "[Metro2033FOV]" << msg << std::endl;
+		std::cout << "[MetroReduxedFOV] " << msg << std::endl;
 	}
 }
 
@@ -18,7 +18,7 @@ void InitConsole() {
 		freopen_s(&fDummy, "CONOUT$", "w", stdout);
 		freopen_s(&fDummy, "CONOUT$", "w", stderr);
 		std::ios::sync_with_stdio(true);
-		Log("Console Initialized. Monitoring active.");
+		Log("Console Initialized.");
 	}
 }
 

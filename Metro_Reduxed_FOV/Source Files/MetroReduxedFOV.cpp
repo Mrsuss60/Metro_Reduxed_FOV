@@ -106,14 +106,14 @@ void MainLoop() {
             if (IsPressed(g_ViewM_Dec)) { tviewModel -= g_Step; changed = true; }
 
             if (changed) {
-                g_targetWorldHFOV.store(std::clamp(tworld, MIN_FOV, MAX_WORLD_FOV));
-                g_targetViewMHFOV.store(std::clamp(tviewModel, MIN_FOV, MAX_ViewM_FOV));
+                g_targetWorldHFOV.store(std::clamp(tworld, g_MinWorldFOV, g_MaxWorldFOV));
+                g_targetViewMHFOV.store(std::clamp(tviewModel, g_MinViewMFOV, g_MaxViewMFOV));
                 SaveConfig();
             }
 
             float activeW = tworld, activeV = tviewModel;
             if (IsPressed(g_ZoomHoldKey)) {
-                float z = std::clamp(g_ZoomFOV.load(), MIN_FOV, MAX_ZOOM_FOV);
+                float z = std::clamp(g_ZoomFOV.load(), g_MinZoomFOV, g_MaxZoomFOV);
                 activeW = activeV = z;
             }
 
