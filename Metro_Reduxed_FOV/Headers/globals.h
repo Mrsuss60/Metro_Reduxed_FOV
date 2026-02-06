@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-constexpr bool ENABLE_CONSOLE = true;
+constexpr bool ENABLE_CONSOLE = false;
 #define PI 3.14159265358979323846f
 
 constexpr float DEFAULT_WORLD_FOV = 50.625f;
@@ -18,10 +18,10 @@ inline int g_ViewM_Inc = 0x67;
 inline int g_ViewM_Dec = 0x64;
 
 inline float g_MinWorldFOV = 10.0f;
-inline float g_MaxWorldFOV = 140.0f;
+inline float g_MaxWorldFOV = 120.0f;
 
 inline float g_MinViewMFOV = 10.0f;
-inline float g_MaxViewMFOV = 88.25f; 
+inline float g_MaxViewMFOV = 100.0f; 
 
 inline float g_MinZoomFOV = 10.0f;
 inline float g_MaxZoomFOV = 60.0f;

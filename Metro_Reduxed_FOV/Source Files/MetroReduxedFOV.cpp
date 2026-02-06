@@ -37,10 +37,13 @@ bool DetectVersion() {
         g_ActiveOffsets = &g;
         std::cout << "[+] Detected Version: " << name << "\n";
 
-        float* aspectRatio = (float*)(g_gameBaseAddr + g.ViewMFOV + 0x4);
-        if (!IsBadReadPtr(aspectRatio, 4)) std::cout << " > Aspect Ratio: " << *aspectRatio << "\n";
+        std::thread([&g]() {
+            Sleep(10000);
+            float* aspectRatio = (float*)(g_gameBaseAddr + g.ViewMFOV + 0x4);
+            if (!IsBadReadPtr(aspectRatio, 4)) std::cout << " > Aspect Ratio: " << *aspectRatio << "\n";
+        }).detach();
         return true;
-        };
+     };
 
     if (Check(g_Steam, "Steam / GOG")) return true;
     if (Check(g_Epic, "Epic Games"))  return true;
@@ -118,7 +121,7 @@ void MainLoop() {
             }
 
             auto Smooth = [](float& curr, float target) {
-                if (abs(curr - target) > 0.01f) curr = Lerp(curr, target, 0.25f);
+                if (abs(curr - target) > 0.01f) curr = Lerp(curr, target, 0.20f);
                 else curr = target;
                 };
             Smooth(g_smoothWorld, activeW);
