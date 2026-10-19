@@ -34,13 +34,18 @@ void SaveConfig() {
     f << "WorldFOV_IncreaseKEY=0x" << std::hex << std::uppercase << g_World_Inc << std::dec << "\n";
     f << "WorldFOV_DecreaseKEY=0x" << std::hex << std::uppercase << g_World_Dec << std::dec << "\n\n";
 
-    f << "# --- ViewModel FOV (Setting ViewModelHorizontalFOV above 88.25 can reveal unfinished player model when using certain weapons) ---\n";
+    f << "# --- ViewModel FOV (Setting ViewModelHorizontalFOV to a much higher value than 120 reveals unfinished player model when using certain weapons) ---\n";
     f << "MinViewModelFOV=" << g_MinViewMFOV << "\n";
     f << "MaxViewModelFOV=" << g_MaxViewMFOV << "\n";
     f << "ViewModelHorizontalFOV=" << g_targetViewMHFOV.load() << "\n";
     f << "\n";
     f << "ViewModelFOV_IncreaseKEY=0x" << std::hex << std::uppercase << g_ViewM_Inc << std::dec << "\n";
     f << "ViewModelFOV_DecreaseKEY=0x" << std::hex << std::uppercase << g_ViewM_Dec << std::dec << "\n\n";
+
+    f << "# --- ADS / Scope Zoom Scaling ---\n";
+    f << "# EnableADSZoom: 1 = Dynamically scales ViewModel FOV when using Scopes to keep them properly close to the eyes.\n";
+    f << "#                0 = Keeps ViewModel FOV locked to fixed hipfire value (No ADS zoom).\n";
+    f << "EnableADSZoom=" << (g_EnableADSZoom.load() ? 1 : 0) << "\n\n";
 
     f << "# --- Zoom ---\n";
     f << "MinZoomFOV=" << g_MinZoomFOV << "\n";
@@ -172,6 +177,9 @@ void LoadConfig() {
 
         else if (key == "HoldZoomFOV")
             g_ZoomFOV.store(std::clamp(valF, g_MinZoomFOV, g_MaxZoomFOV));
+
+        else if (key == "EnableADSZoom")
+            g_EnableADSZoom.store(valI != 0);
 
         else if (key == "Step") g_Step = std::clamp(valF, 0.1f, 1.5f);
 
